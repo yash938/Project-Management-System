@@ -1,6 +1,8 @@
 package com.Project_Management.Config;
 
+import com.Project_Management.Security.JwtAuthenticationFilter;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -18,6 +20,8 @@ import java.util.List;
 @Configuration
 @EnableWebSecurity
 public class AppConfig {
+    @Autowired
+    private JwtAuthenticationFilter jwtAuthenticationFilter;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity security) throws Exception{
@@ -26,7 +30,7 @@ public class AppConfig {
                         auth.requestMatchers("/api/**").authenticated()
                                 .anyRequest().permitAll()
                         )
-                .addFilterBefore(new JwtTokenValidator(), BasicAuthenticationFilter.class)
+                .addFilterBefore(jwtAuthenticationFilter,BasicAuthenticationFilter.class)
                 .csrf(csrf -> csrf.disable())
                 .cors(cor -> cor.configurationSource(new CorsConfigurationSource() {
                     @Override
