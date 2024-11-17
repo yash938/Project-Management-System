@@ -1,5 +1,6 @@
 package com.Project_Management.Repository;
 
+import com.Project_Management.Dtos.UserDto;
 import com.Project_Management.Entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

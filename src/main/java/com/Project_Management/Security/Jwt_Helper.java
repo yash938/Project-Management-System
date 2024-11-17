@@ -48,11 +48,11 @@ public class Jwt_Helper {
                 claims.put("email",userDetails.getUsername());
 
                 return Jwts.builder()
+                        .setClaims(claims)
+                        .setSubject(userDetails.getUsername())
                         .setExpiration(new Date(System.currentTimeMillis() + Jwt_Constant.TOKEN_VALID))
                         .setIssuedAt(new Date(System.currentTimeMillis()))
-                        .setSubject(userDetails.getUsername())
-                        .setClaims(claims)
-                        .signWith(SignatureAlgorithm.ES256,Jwt_Constant.JWT_KEY)
+                        .signWith(SignatureAlgorithm.HS256,Jwt_Constant.JWT_KEY)
                         .compact();
         }
 }

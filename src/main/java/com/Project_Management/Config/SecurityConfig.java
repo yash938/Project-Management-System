@@ -30,36 +30,34 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+        httpSecurity.csrf(csr->csr.disable());
         httpSecurity.cors(httpSecurityCorsConfigurer -> httpSecurityCorsConfigurer.configurationSource(new CorsConfigurationSource() {
-            @Override
-            public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
-                CorsConfiguration configuration = new CorsConfiguration();
-                configuration.setMaxAge(3000L);
-                configuration.setAllowedHeaders(List.of("*"));
-                configuration.setAllowedMethods(List.of("*"));
-                configuration.setAllowedOrigins(List.of("http://localhost:3000"));
-                configuration.setExposedHeaders(List.of("Authorization"));
-                return configuration;
-            }
-        }))
-                .authorizeHttpRequests(auth->auth
-                        .requestMatchers("/auth/**").permitAll()
-                        .anyRequest().authenticated()
-
-                );
-
-                httpSecurity.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-                        .exceptionHandling(ex->ex.authenticationEntryPoint(authEntryPoint))
-                        .sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+                    @Override
+                    public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
+                        CorsConfiguration configuration = new CorsConfiguration();
+                        configuration.setMaxAge(3000L);
+                        configuration.setAllowedHeaders(List.of("*"));
+                        configuration.setAllowedMethods(List.of("*"));
+                        configuration.setAllowedOrigins(List.of("http://localhost:3000"));
+                        configuration.setExposedHeaders(List.of("Authorization"));
+                        return configuration;
+                    }
+                }))
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/auth/**").permitAll() // Public routes
+                        .anyRequest().permitAll()          // Protected routes
+                )
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class) // Add JWT filter
+                .exceptionHandling(ex -> ex.authenticationEntryPoint(authEntryPoint))
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
         return httpSecurity.build();
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
