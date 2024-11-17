@@ -26,6 +26,11 @@ public class Jwt_Helper {
             return claimsResolver.apply(claims);
         }
 
+        public String getEmailFromToken(String token) {
+                // Extract the 'email' claim from the token
+                return getClaimsFromToken(token, claims -> claims.get("email", String.class));
+        }
+
         public Claims getAllClaimsFromToken(String token){
                 try{
                         return Jwts.parserBuilder().setSigningKey(Jwt_Constant.JWT_KEY).build().parseClaimsJws(token).getBody();

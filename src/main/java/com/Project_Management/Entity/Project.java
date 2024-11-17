@@ -32,7 +32,7 @@ public class Project {
     private List<User> team = new ArrayList<>();
 
     @ManyToOne
-    private User user;
+    private User owner;
 
     @OneToMany(mappedBy = "project",cascade = CascadeType.ALL,orphanRemoval = true)
     private List<IssueEntity> issueEntities = new ArrayList<>();
