@@ -25,42 +25,10 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private Jwt_Helper jwtHelper;
-
-    @Autowired
-    private AuthenticationManager authenticationManager;
-
-    @Autowired
-    private ModelMapper modelMapper;
-
-    @Autowired
-    private UserDetailsService userDetailsService;
-
-    private Logger logger = LoggerFactory.getLogger(UserController.class);
-
-    // Sign-up method
-    @PostMapping("/sign-in")
-    public ResponseEntity<JwtResponse> createUser(@RequestBody JwtRequest jwtRequest) {
-        logger.info("Username {},Password {}",jwtRequest.getEmail(),jwtRequest.getPassword());
-
-        this.doAuthenticate(jwtRequest.getEmail(), jwtRequest.getPassword());
-        UserDetails userDetails = userDetailsService.loadUserByUsername(jwtRequest.getEmail());
-        String token = jwtHelper.generateToken(userDetails);
-
-        JwtResponse build = JwtResponse.builder().token(token).user(modelMapper.map(userDetails, UserDto.class)).build();
-        return new ResponseEntity<>(build,HttpStatus.CREATED);
-
+    @PostMapping("/sign-up")
+    public ResponseEntity<UserDto> createUser(UserDto userDto){
+        UserDto user = userService.createUser(userDto);
+        return new ResponseEntity<>(user,HttpStatus.CREATED);
     }
 
-    // Authenticate method to validate user credentials
-    private void doAuthenticate(String email, String password) {
-        try {
-            authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(email, password)
-            );
-        } catch (Exception e) {
-            throw new RuntimeException("Authentication failed: " + e.getMessage());
-        }
-    }
 }

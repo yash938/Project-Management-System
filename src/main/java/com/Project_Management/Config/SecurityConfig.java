@@ -45,7 +45,8 @@ public class SecurityConfig {
                 }))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/**").permitAll() // Public routes
-                        .anyRequest().permitAll()          // Protected routes
+
+                        .anyRequest().authenticated()          // Protected routes
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class) // Add JWT filter
                 .exceptionHandling(ex -> ex.authenticationEntryPoint(authEntryPoint))
