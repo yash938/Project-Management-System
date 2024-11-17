@@ -1,9 +1,6 @@
 package com.Project_Management.Entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
@@ -13,4 +10,7 @@ public class IssueEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long issueId;
+
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    private User user;
 }
