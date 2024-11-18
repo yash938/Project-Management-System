@@ -22,4 +22,6 @@ public interface ProjectService {
 
     Chat getChatByProjectId(Long projectId);
 
+    List<Project> searchProject(String keyword,User user);
+
 }
