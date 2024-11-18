@@ -4,7 +4,6 @@ import com.Project_Management.Dtos.UserDto;
 import com.Project_Management.Entity.User;
 import com.Project_Management.Exception.UserNotFound;
 import com.Project_Management.Repository.UserRepo;
-import com.Project_Management.Security.Jwt_Helper;
 import com.Project_Management.Service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +25,7 @@ public class UserServiceImp implements UserService {
     @Autowired
     private ModelMapper modelMapper;
 
-    @Autowired
-    private Jwt_Helper jwtHelper;
+
 
     @Override
     public UserDto createUser(UserDto userdto) {
@@ -42,13 +40,6 @@ public class UserServiceImp implements UserService {
 
         User savedUser = userRepo.save(user);
         return modelMapper.map(savedUser, UserDto.class);
-    }
-
-    @Override
-    public User findUserProfileByJwt(String jwt) {
-        String email = jwtHelper.getEmailFromToken(jwt);
-        User emails = userRepo.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("Email id is not found"));
-        return emails;
     }
 
     @Override
