@@ -10,5 +10,5 @@ public interface InvitationRepo extends JpaRepository<Invitation,Long> {
     InvitationDto findByToken(String token);
     InvitationDto findByEmail(String userEmail);
 
-    void deleteToken(String token);
+    void deleteByToken(String token);
 }

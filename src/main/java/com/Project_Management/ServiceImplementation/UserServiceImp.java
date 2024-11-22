@@ -29,9 +29,9 @@ public class UserServiceImp implements UserService {
 
     @Override
     public UserDto createUser(UserDto userdto) {
-        Optional<User> existingUser = userRepo.findByEmail(userdto.getEmail());
-        if (existingUser.isPresent()) {
-            throw new UserNotFound("User with email " + userdto.getEmail() + " already exists.");
+        // Check if the password is not null
+        if (userdto.getPassword() == null || userdto.getPassword().isEmpty()) {
+            throw new IllegalArgumentException("Password cannot be null or empty");
         }
 
         // Mapping and saving new user logic
@@ -42,10 +42,12 @@ public class UserServiceImp implements UserService {
         return modelMapper.map(savedUser, UserDto.class);
     }
 
+
     @Override
-    public User findByEmail(String email) {
-        User user = userRepo.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User email is not found"));
-        return user;
+    public UserDto findByEmail(String email) {
+        User userEmailIsNotFound = userRepo.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User email is not found"));
+        UserDto userEmail = modelMapper.map(userEmailIsNotFound, UserDto.class);
+        return userEmail;
     }
 
     @Override

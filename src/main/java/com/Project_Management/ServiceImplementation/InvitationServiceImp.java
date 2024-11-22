@@ -65,7 +65,7 @@ public class InvitationServiceImp implements InvitationService {
             throw new RuntimeException("Invitation not found for the provided token.");
         }
 
-        invitationRepo.deleteToken(token);
+        invitationRepo.deleteByToken(token);
 
     }
 }
