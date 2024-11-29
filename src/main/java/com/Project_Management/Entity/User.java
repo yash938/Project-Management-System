@@ -28,7 +28,7 @@ public class User implements UserDetails {
     private String projectSize;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "user" ,cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "assign" ,cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private List<IssueEntity> assignIssue = new ArrayList<>();
 
     @Override
