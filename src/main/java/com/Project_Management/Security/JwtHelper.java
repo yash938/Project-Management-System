@@ -5,6 +5,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -37,13 +38,12 @@ public class JwtHelper {
     // For retrieving any information from token
     public Claims getAllClaimsFromToken(String token) {
         try {
-            return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
+            return Jwts.parserBuilder().setSigningKey(SECRET_KEY).build().parseClaimsJws(token).getBody();
         } catch (Exception e) {
             logger.error("Failed to parse token: {}", e.getMessage());
             throw new RuntimeException("Invalid token");
         }
     }
-
     public Boolean isTokenExpired(String token) {
         final Date expiration = getExpirationFromToken(token);
         return expiration.before(new Date());
@@ -52,6 +52,11 @@ public class JwtHelper {
     public Date getExpirationFromToken(String token) {
         return getClaimFromToken(token, Claims::getExpiration);
     }
+
+    public String getEmailFromToken(String token) {
+        return getClaimFromToken(token, claims -> claims.get("email", String.class));
+    }
+
 
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
