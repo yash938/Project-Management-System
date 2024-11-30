@@ -1,4 +1,4 @@
-package com.Project_Management.ServiceImplementation;
+package com.Project_Management.ServiceImpl;
 
 import com.Project_Management.Service.EmailService;
 import jakarta.mail.MessagingException;
@@ -11,25 +11,26 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 @Service
-public class EmailServiceImp implements EmailService {
-
+public class EmailServiceImpl implements EmailService {
     @Autowired
     private JavaMailSender javaMailSender;
     @Override
     public void sendEmailWithToken(String userEmail, String link) throws MessagingException {
-        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(mimeMessage,"utf-8");
+        MimeMessage mimeMessage =javaMailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(mimeMessage,"UTF-8");
 
-        String subject= "Join Project Team Invitation";
-        String text = "Click the link to join project team "+link;
+        String subject = "Join Project team Invitation";
+        String test = "Click the below link to join project team "+link;
 
         helper.setSubject(subject);
-        helper.setText(text,true);
+        helper.setText(test);
         helper.setTo(userEmail);
-        try {
+
+        try{
             javaMailSender.send(mimeMessage);
-        }catch (MailSendException ex){
+        }catch (MailSendException e){
             throw new MailSendException("Failed to send email");
         }
+
     }
 }

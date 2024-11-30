@@ -28,12 +28,12 @@ public class Project {
     @OneToOne(mappedBy = "project",cascade = CascadeType.ALL,orphanRemoval = true)
     private Chat chat;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<User> team = new ArrayList<>();
 
     @ManyToOne
     private User owner;
 
     @OneToMany(mappedBy = "project",cascade = CascadeType.ALL,orphanRemoval = true)
-    private List<IssueEntity> issueEntities = new ArrayList<>();
+    private List<IssueEntity> issue = new ArrayList<>();
 }

@@ -27,7 +27,7 @@ public class IssueEntity {
     private List<String> tags = new ArrayList<>();
 
     @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    private User user;
+    private User assign;
 
 
     @JsonIgnore

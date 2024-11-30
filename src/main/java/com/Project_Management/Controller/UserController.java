@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
 @RestController
 @RequestMapping("/user")
@@ -34,6 +35,11 @@ public class UserController {
     public ResponseEntity<UserDto> userById(@PathVariable Long userId){
         UserDto byUserId = userService.findByUserId(userId);
         return new ResponseEntity<>(byUserId, HttpStatus.OK);
+    }
+    @GetMapping("/all")
+    public ResponseEntity<List<UserDto>> getAll(){
+        List<UserDto> allUsers = userService.getAllUsers();
+        return new ResponseEntity<>(allUsers, HttpStatus.OK);
     }
 
    @DeleteMapping("/{userId}")

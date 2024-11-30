@@ -1,5 +1,6 @@
 package com.Project_Management.Repository;
 
+import com.Project_Management.Dto.UserDto;
 import com.Project_Management.Entity.Project;
 import com.Project_Management.Entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;

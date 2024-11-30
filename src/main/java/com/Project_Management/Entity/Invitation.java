@@ -15,7 +15,6 @@ public class Invitation {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long InvitationId;
-
     private String token;
     private String email;
     private Long projectId;
