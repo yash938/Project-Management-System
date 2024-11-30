@@ -9,6 +9,6 @@ import java.util.List;
 
 @Repository
 public interface CommentRepo extends JpaRepository<Comment,Long> {
-    List<Comment> findByIssue_IssueId(Long issueId);
+    List<Comment> findByIssueId(Long issueId);
 
 }

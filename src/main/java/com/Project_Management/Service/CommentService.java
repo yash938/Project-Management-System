@@ -5,7 +5,7 @@ import com.Project_Management.Entity.Comment;
 import java.util.List;
 
 public interface CommentService {
-    Comment createComment(Long issueId, Long userId, String comment);
+    Comment createComment(Long issueId, Long userId, String content);
     void deleteComment(Long commentId,Long userId) throws Exception;
     List<Comment> findCommentByIssueId(Long issueId);
 }
