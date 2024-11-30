@@ -10,6 +10,7 @@ public interface UserService {
     public UserDto createUser(UserDto userDto);
     UserDto findByUserId(Long userId);
     User userByEmail(String email);
+    User getById(Long userId);
     UserDto updateUserProjectSize(UserDto userDto,int number);
 
     void deleteUser(Long userId);

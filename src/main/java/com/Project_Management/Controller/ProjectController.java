@@ -28,10 +28,10 @@ public class ProjectController {
 
     @Autowired
     private UserService userService;
-    @GetMapping("/{projectId}")
-    public ResponseEntity<List<Project>> getProjectById(@PathVariable Long projectId){
-        List<Project> projectById = projectService.getProjectById(projectId);
-        return new ResponseEntity<>(projectById,HttpStatus.OK);
+    @GetMapping("/id/{projectId}")
+    public ResponseEntity<List<Project>> getProjectId(@PathVariable Long projectId){
+        List<Project> project= projectService.getProjectById(projectId);
+        return new ResponseEntity<>(project,HttpStatus.OK);
     }
 
     @GetMapping
@@ -73,9 +73,9 @@ public class ProjectController {
     }
 
     @GetMapping("/{projectId}")
-    public ResponseEntity<Chat> getChatByProject(@PathVariable Long projectId){
-        Chat chatByProjectId = projectService.getChatByProjectId(projectId);
-        return new ResponseEntity<>(chatByProjectId,HttpStatus.OK);
+    public ResponseEntity<Chat> getChatProject(@PathVariable Long projectId){
+        Chat chatProjectId = projectService.getChatByProjectId(projectId);
+        return new ResponseEntity<>(chatProjectId,HttpStatus.OK);
     }
 
     @PostMapping("/invite")

@@ -15,9 +15,6 @@ public class IssueEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long issueId;
-
-
-
     private String title;
     private String description;
     private String status;
@@ -28,7 +25,6 @@ public class IssueEntity {
 
     @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private User assign;
-
 
     @JsonIgnore
     @ManyToOne

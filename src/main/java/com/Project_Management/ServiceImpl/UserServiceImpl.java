@@ -45,6 +45,12 @@ public class UserServiceImpl implements UserService {
         return userEmailIsNotFound;
     }
 
+    @Override
+    public User getById(Long userId) {
+        User user = userRepo.findById(userId).orElseThrow(() -> new RuntimeException("user id is not found"));
+        return user;
+    }
+
 
     @Override
     public UserDto updateUserProjectSize(UserDto userDto, int number) {
