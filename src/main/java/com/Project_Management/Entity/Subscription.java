@@ -15,12 +15,13 @@ import java.time.LocalDate;
 public class Subscription {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Long subscriptionId;
     private LocalDate subscriptionStartDate;
     private LocalDate subscriptionEndDate;
     private PlanType planType;
     private boolean isValid;
 
     @OneToOne
+    @JoinColumn(name = "user_id")
     private User user;
 }

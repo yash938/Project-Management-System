@@ -30,6 +30,9 @@ public class User implements UserDetails {
     @JsonIgnore
     @OneToMany(mappedBy = "assign" ,cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private List<IssueEntity> assignIssue = new ArrayList<>();
+    @JsonIgnore
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Subscription subscription;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

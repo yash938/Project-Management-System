@@ -28,14 +28,12 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private SubscriptionPlanService subscriptionPlanService;
+
     @Override
     public UserDto createUser(UserDto userDto) {
         User users = modelMapper.map(userDto, User.class);
         users.setPassword(passwordEncoder.encode(users.getPassword()));
         User createUser = userRepo.save(users);
-        subscriptionPlanService.createSubscription(createUser);
         return modelMapper.map(createUser, UserDto.class);
     }
     @Override

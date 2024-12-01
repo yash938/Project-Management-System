@@ -37,7 +37,7 @@ public class MessageServiceImpl implements MessageService {
     @Override
     public List<Message> messageByProjectId(Long projectId) {
         Chat chat = projectService.getChatByProjectId(projectId);
-        List<Message> message = messageRepo.findByChatIdOrderByCreatedAtAsc(chat.getChatId());
+        List<Message> message = messageRepo.findByChatChatIdOrderByCreatedAtAsc(chat.getChatId());
         return message;
     }
 }
