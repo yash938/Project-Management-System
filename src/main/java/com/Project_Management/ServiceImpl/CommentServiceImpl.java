@@ -50,8 +50,8 @@ public class CommentServiceImpl implements CommentService {
         }
     }
 
-    @Override
+    @Override 
     public List<Comment> findCommentByIssueId(Long issueId) {
-        return commentRepo.findByIssueId(issueId);
+        return commentRepo.findByIssue_IssueId(issueId);
     }
 }

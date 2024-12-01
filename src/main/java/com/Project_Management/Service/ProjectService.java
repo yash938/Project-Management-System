@@ -12,7 +12,7 @@ public interface ProjectService {
     Project createProject(Project project,User user);
     List<Project> getProjectByTeam(User user, String category, String tags);
 
-    List<Project> getProjectById(Long projectId);
+    Project getProjectById(Long projectId);
 
     void deleteProject(Long projectId);
 

@@ -4,6 +4,7 @@ import com.Project_Management.Dto.UserDto;
 import com.Project_Management.Entity.User;
 import com.Project_Management.Repository.UserRepo;
 import com.Project_Management.Security.JwtHelper;
+import com.Project_Management.Service.SubscriptionPlanService;
 import com.Project_Management.Service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,11 +27,15 @@ public class UserServiceImpl implements UserService {
     private ModelMapper modelMapper;
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private SubscriptionPlanService subscriptionPlanService;
     @Override
     public UserDto createUser(UserDto userDto) {
         User users = modelMapper.map(userDto, User.class);
         users.setPassword(passwordEncoder.encode(users.getPassword()));
         User createUser = userRepo.save(users);
+        subscriptionPlanService.createSubscription(createUser);
         return modelMapper.map(createUser, UserDto.class);
     }
     @Override
@@ -81,7 +86,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findUserProfileByJwt(String jwt) {
-        String emailFromToken = jwtHelper.getEmailFromToken(jwt);
+        String emailFromToken = jwtHelper.getUsernameFromToken(jwt);
         return userByEmail(emailFromToken);
     }
 

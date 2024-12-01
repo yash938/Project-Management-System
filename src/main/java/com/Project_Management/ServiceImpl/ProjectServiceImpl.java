@@ -34,6 +34,7 @@ public class ProjectServiceImpl implements ProjectService {
         project1.setName(project.getName());
         project1.setOwner(user);
         project1.setCategory(project.getCategory());
+        project1.setDescription(project.getDescription());
         project1.setTags(project.getTags());
         project1.getTeam().add(user);
 
@@ -63,9 +64,9 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public List<Project> getProjectById(Long projectId) {
+    public Project getProjectById(Long projectId) {
         Project project = projectRepo.findById(projectId).orElseThrow(() -> new RuntimeException("Project id is not found"));
-        return (List<Project>) project;
+        return  project;
     }
 
     @Override

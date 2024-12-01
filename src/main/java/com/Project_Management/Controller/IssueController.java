@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.core.Local;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,10 +46,10 @@ public class IssueController {
     }
 
     @PostMapping
-    public ResponseEntity<IssueDto> createIssue(@RequestBody IssueReq issueReq, @RequestHeader("Authorization") String token){
+    public ResponseEntity<IssueDto> createIssue(@RequestBody IssueReq issueReq){
 
-        User tokenUser = userService.findUserProfileByJwt(token);
-        User user = userService.getById(tokenUser.getUserId());
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) authentication.getPrincipal();
 
         IssueEntity issue = issueService.createIssue(issueReq, user);
         IssueDto issueDto = new IssueDto();
@@ -65,8 +67,9 @@ public class IssueController {
     }
 
     @DeleteMapping("/{issueId}")
-    public ResponseEntity<MessageResponse> deleteIssue(@PathVariable Long issueId,@RequestHeader("Authorization") String jwt){
-        User user = userService.findUserProfileByJwt(jwt);
+    public ResponseEntity<MessageResponse> deleteIssue(@PathVariable Long issueId){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) authentication.getPrincipal();
         issueService.deleteIssue(issueId, user.getUserId());
         MessageResponse issues = MessageResponse.builder().message("Issue deleted successfully").date(LocalDate.now()).status(HttpStatus.OK).build();
         return new ResponseEntity<>(issues,HttpStatus.OK);

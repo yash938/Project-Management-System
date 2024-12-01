@@ -41,7 +41,7 @@ public class IssueServiceImpl implements IssueService {
 
     @Override
     public IssueEntity createIssue(IssueReq issueReq, User user) {
-        List<Project> project = projectService.getProjectById(issueReq.getProjectId());
+        Project project = projectService.getProjectById(issueReq.getProjectId());
         IssueEntity issue = new IssueEntity();
         issue.setTitle(issueReq.getTitle());
         issue.setDescription(issueReq.getDescription());

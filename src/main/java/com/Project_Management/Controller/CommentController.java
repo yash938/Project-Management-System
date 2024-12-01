@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,17 +28,18 @@ public class CommentController {
 
     @PostMapping
     public ResponseEntity<Comment> createComment(
-            @RequestBody CommentDto commentDto,
-            @RequestHeader("Authorization") String jwt
+            @RequestBody CommentDto commentDto
             ){
-        User user = userService.findUserProfileByJwt(jwt);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) authentication.getPrincipal();
         Comment comment = commentService.createComment(commentDto.getIssueId(), user.getUserId(), commentDto.getContent());
         return new ResponseEntity<>(comment, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{commentId}")
-    public ResponseEntity<MessageResponse> deleteComment(@RequestHeader("Authorization") String jwt, @PathVariable Long commentId) throws Exception {
-        User user = userService.findUserProfileByJwt(jwt);
+    public ResponseEntity<MessageResponse> deleteComment(@PathVariable Long commentId) throws Exception {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) authentication.getPrincipal();
         commentService.deleteComment(commentId, user.getUserId());
         MessageResponse deleteComment = MessageResponse.builder().message("Comment deleted successfully").status(HttpStatus.OK).build();
         return new ResponseEntity<>(deleteComment, HttpStatus.OK);
