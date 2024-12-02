@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.List;
 
-@Repository
+@RestController
 @RequestMapping("/issue")
 public class IssueController {
     @Autowired
@@ -45,7 +45,7 @@ public class IssueController {
         return new ResponseEntity<>(project, HttpStatus.OK);
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<IssueDto> createIssue(@RequestBody IssueReq issueReq){
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -53,15 +53,16 @@ public class IssueController {
 
         IssueEntity issue = issueService.createIssue(issueReq, user);
         IssueDto issueDto = new IssueDto();
+        issueDto.setIssueId(issue.getIssueId());
         issueDto.setDescription(issue.getDescription());
         issueDto.setAssignee(issue.getAssign());
         issueDto.setPriority(issue.getPriority());
         issueDto.setDueDate(issue.getDueDate());
         issueDto.setProject(issue.getProject());
-        issueDto.setStatus(issueDto.getStatus());
-        issueDto.setTitle(issueDto.getTitle());
-        issueDto.setProjectId(issueDto.getProjectId());
-        issueDto.setProject(issueDto.getProject());
+        issueDto.setStatus(issue.getStatus());
+        issueDto.setTitle(issue.getTitle());
+        issueDto.setProjectId(issue.getProjectId());
+        issueDto.setProject(issue.getProject());
 
         return ResponseEntity.ok(issueDto);
     }

@@ -57,6 +57,7 @@ public class SecurityConfig {
 
                                 .requestMatchers("/auth/**").permitAll()
                                 .requestMatchers("/projects/**").authenticated()
+                                .requestMatchers("/issue/**").authenticated()
                                 .anyRequest().permitAll()
                         );
 

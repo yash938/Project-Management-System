@@ -39,10 +39,10 @@ public class ProjectController {
     @GetMapping
     public ResponseEntity<List<Project>> getProjects(
             @RequestParam(required = false) String category,
-            @RequestParam(required = false) String tag,
-            @RequestHeader("Authorization") String jwt
+            @RequestParam(required = false) String tag
     ){
-        User user = userService.findUserProfileByJwt(jwt);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) authentication.getPrincipal();
         List<Project> projectByTeam = projectService.getProjectByTeam(user, category, tag);
         return new ResponseEntity<>(projectByTeam,HttpStatus.OK);
     }

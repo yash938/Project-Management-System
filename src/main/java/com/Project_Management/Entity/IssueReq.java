@@ -1,5 +1,6 @@
 package com.Project_Management.Entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,6 +19,7 @@ public class IssueReq {
     private String status;
     private Long projectId;
     private String priority;
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate dueDate;
     private List<String> tags = new ArrayList<>();
     private Project project;

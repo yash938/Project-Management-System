@@ -10,6 +10,4 @@ import java.util.List;
 @Repository
 public interface IssueRepo extends JpaRepository<IssueEntity,Long> {
     List<IssueEntity> findByProjectId(Long projectId);
-
-
 }
