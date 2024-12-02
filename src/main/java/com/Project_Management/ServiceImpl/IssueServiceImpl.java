@@ -46,6 +46,7 @@ public class IssueServiceImpl implements IssueService {
         issue.setTitle(issueReq.getTitle());
         issue.setDescription(issueReq.getDescription());
         issue.setPriority(issueReq.getPriority());
+        issue.setProjectId(issueReq.getProjectId());
         issue.setStatus(issueReq.getStatus());
         issue.setDueDate(issueReq.getDueDate());
 

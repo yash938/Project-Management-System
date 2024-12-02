@@ -40,7 +40,7 @@ public class IssueController {
     }
 
     @GetMapping("/project/{projectId}")
-        public ResponseEntity<List<IssueEntity>> getIssueByProjectId(@PathVariable Long projectId){
+        public ResponseEntity<List<IssueEntity>> getByProjectId(@PathVariable Long projectId){
         List<IssueEntity> project = issueService.getIssueByProjectId(projectId);
         return new ResponseEntity<>(project, HttpStatus.OK);
     }
@@ -76,13 +76,13 @@ public class IssueController {
         return new ResponseEntity<>(issues,HttpStatus.OK);
     }
 
-    @PutMapping("/{issueID}/assignee/{userId}")
+    @PutMapping("/{issueId}/assignee/{userId}")
     public ResponseEntity<IssueEntity> addUserIssue(@PathVariable Long issueId,@PathVariable Long userId){
         IssueEntity issue = issueService.addUserToIssue(issueId, userId);
         return new ResponseEntity<>(issue,HttpStatus.OK);
     }
 
-    @PutMapping("/{issueID}/status/{status}")
+    @PutMapping("/{issueId}/status/{status}")
     public ResponseEntity<IssueEntity> updateStatus(@PathVariable String status,@PathVariable Long issueId){
         IssueEntity issue = issueService.updateStatus(issueId, status);
         return new ResponseEntity<>(issue,HttpStatus.OK);

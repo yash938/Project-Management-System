@@ -18,6 +18,7 @@ public class IssueEntity {
     private String title;
     private String description;
     private String status;
+    @Column(name = "project_id")
     private Long projectId;
     private String priority;
     private LocalDate dueDate;
